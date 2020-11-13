@@ -12,9 +12,9 @@ how to run / build / ***test*** your creation.
 
 Runs the app in the development mode. Webpack will reload if you make edits.
 
-### `npm run build`
+#### `npm run build`
 
-Builds the app for production to the `dist` folder. For for best performance when deploying to Firebase
+Builds the app for production to the `dist` folder. Used for best performance when deploying to Firebase
 
 ## Process
 
