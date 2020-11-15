@@ -50,7 +50,7 @@ module.exports = {
         historyApiFallback: true,
         // contentBase: path.resolve(__dirname, './dist'),
         // watchContentBase: true,
-        open: true,
+        // open: true,
         hot: true,
         port: 3000,
     },
