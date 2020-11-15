@@ -13,7 +13,7 @@ function App() {
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    axios.get('/api/users/session/')
+    axios.get('/api/users/session')
       .then(function (response) {
         // handle success
         console.log('hello response');
@@ -24,7 +24,7 @@ function App() {
         console.log(error)
       });
     // if [], run once when App() loads and don't run again
-  }, []);
+  });
 
   return (
     <div className="App">

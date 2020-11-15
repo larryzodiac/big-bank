@@ -9,7 +9,8 @@ module.exports = {
     entry: './src/client/index.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -53,6 +54,9 @@ module.exports = {
         open: true,
         hot: true,
         port: 3000,
+        proxy: {
+            '/api': 'http://localhost:8000'
+        }
     },
     plugins: [
         // Only update what has changed on hot reload

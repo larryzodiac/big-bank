@@ -11,20 +11,19 @@ const dbName = 'big_bank';
 const uri = 'mongodb+srv://Evan:1996@cluster0.lvbzy.mongodb.net/big_bank?retryWrites=true&w=majority';
 let db;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const server = express();
 client.connect(err => {
   if (err) {console.log(err)};
   db = client.db(dbName);
-  server.listen(3000, () => console.log(`Listening on port 3000!`));
+  // Webpack dev-server and express server on the same port were disrupting one another
+  server.listen(8000, () => console.log(`Listening on port 8000!`));
   console.log('success!');
 });
 
-const server = express();
-
-// server.use(express.static('dist'));
 // parse application/x-www-form-urlencoded
-// server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
-// server.use(bodyParser.json());
+server.use(bodyParser.json());
 // Create session
 server.use(session({
   // use UUIDs for session IDs
