@@ -12,18 +12,19 @@ function App() {
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   // Similar to componentDidMount and componentDidUpdate:
-  // useEffect(() => {
-  //   axios.get('/api/users/session')
-  //     .then(function (response) {
-  //       // handle success
-  //       console.log('hello response');
-  //       console.log(response);
-  //     })
-  //     .catch(function(error) {
-  //       console.log('here we are');
-  //       console.log(error)
-  //     });
-  // });
+  useEffect(() => {
+    axios.get('/api/users/session/')
+      .then(function (response) {
+        // handle success
+        console.log('hello response');
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log('here we are');
+        console.log(error)
+      });
+    // if [], run once when App() loads and don't run again
+  }, []);
 
   return (
     <div className="App">
