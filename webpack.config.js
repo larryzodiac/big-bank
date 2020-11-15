@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 module.exports = {
     entry: './src/client/index.js',
@@ -50,7 +50,7 @@ module.exports = {
         historyApiFallback: true,
         // contentBase: path.resolve(__dirname, './dist'),
         // watchContentBase: true,
-        // open: true,
+        open: true,
         hot: true,
         port: 3000,
     },
