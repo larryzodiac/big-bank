@@ -16,22 +16,26 @@ function App() {
     axios.get('/api/dashboard')
       .then(function (response) {
         // handle success
-        console.log('hello response');
         console.log(response);
+        console.log('hello');
       })
       .catch(function(error) {
-        console.log('here we are');
-        console.log(error)
+        // console.log(error)
+        console.log('ohno');
+        setLoginSuccess(false);
       });
     // if [], run once when App() loads and don't run again
-  });
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <Nav />
-
       </header>
+      {loginSuccess
+        ? <p>Logged in!</p>
+        : <p>Not logged in!</p>
+      }
     </div>
   );
 }

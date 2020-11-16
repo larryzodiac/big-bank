@@ -1,48 +1,22 @@
 /* Server.js */
 
 // MongoDB
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 //Express
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 // Mongoose
 const mongoose = require('mongoose');
-const user = require('./user');
 const UserModel = require('./user');
 
 const dbName = 'big_bank';
 const uri = 'mongodb+srv://Evan:1996@cluster0.lvbzy.mongodb.net/big_bank?retryWrites=true&w=majority';
-let db;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const server = express();
-// client.connect(err => {
-//   if (err) {console.log(err)};
-//   db = client.db(dbName);
-//   // Webpack dev-server and express server on the same port were disrupting one another
-//   server.listen(8000, () => console.log(`Listening on port 8000!`));
-//   console.log('success!');
-// });
-
-mongoose.connect(
-  uri,
-  options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  },
-  error => {
-    if (error) {console.log(err)};
-    // Webpack dev-server and express server on the same port were disrupting one another
-    server.listen(8000, () => console.log(`Listening on port 8000!`));
-    console.log('success!');
-  }
-);
 
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }));
-// // parse application/json
+// parse application/json
 server.use(bodyParser.json());
 // Create session
 server.use(session({
@@ -54,26 +28,15 @@ server.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  // When 'secure: true', req.session not saved in api/login
+  cookie: {}
 }));
 
-// For debugging:
-// app.use(function(req, res, next) {
-//   console.log("SessionID: " + req.sessionID);
-//   console.log(req.isAuthenticated() ? "This user is logged in" : "This user is NOT logged in");
-//   next();
-// });
-
 server.get('/api/dashboard', (req, res) => {
-  // res.send('hello');
-  // console.log('req.session.id');
-  // console.log(req.session.id);
-  // console.log(req.session);
-  // res.send(req.session.cookie);
-  if(!req.session.user) {
+  if(!req.session.userId) {
     return res.status(401).send('No user logged in!');
   }
-  return res.status(200).send('Already logged in!');
+  return res.status(200).send('Logged in!');
 });
 
 server.post('/api/register', (req, res) => {
@@ -89,3 +52,47 @@ server.post('/api/register', (req, res) => {
     return res.status(200).send(`Registered user: ${username}`);
   });
 });
+
+server.post('/api/login', (req, res) => {
+  const {username, password} = req.body;
+  UserModel.findOne(
+    { username: username },
+    function(error, user) {
+      if(error) {
+        console.log(error);
+        return res.status(500).send('Login failed!');
+      }
+      if(!user) {
+        return res.status(404).send('User does not exist');
+      }
+      user.comparePassword(password, function(err, isMatch){
+        if(isMatch && isMatch == true) {
+          req.session.userId = user._id;
+          return res.status(200).send(`Logged in user: ${username} with Id: ${req.session.userId}`);
+        } else {
+          return res.status(401).send('Password invalid');
+        }
+      });
+    }
+  )
+});
+
+server.post('/api/logout', (req, res) => {
+  req.session.destroy();
+  return res.status(200).send('Successful logout!')
+});
+
+mongoose.connect(
+  uri,
+  options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  },
+  error => {
+    if (error) {console.log(err)};
+    // Webpack dev-server and express server on the same port were disrupting one another
+    server.listen(8000, () => console.log(`Listening on port 8000!`));
+  }
+);
