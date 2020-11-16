@@ -13,7 +13,7 @@ function App() {
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    axios.get('/api/users/session')
+    axios.get('/api/dashboard')
       .then(function (response) {
         // handle success
         console.log('hello response');
