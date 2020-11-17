@@ -33,10 +33,12 @@ server.use(session({
 }));
 
 server.get('/api/dashboard', (req, res) => {
+  console.log('Session here:');
+  console.log(req.session.userId);
   if(!req.session.userId) {
     return res.status(401).send('No user logged in!');
   }
-  return res.status(200).send('Logged in!');
+  return res.status(200).send(req.session.userId);
 });
 
 server.post('/api/register', (req, res) => {

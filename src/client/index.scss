@@ -1,12 +1,1 @@
 /* index.scss */
-
-@import 'carbon-components/scss/globals/scss/styles.scss';
-
-$feature-flags: (
-  ui-shell: true,
-);
-
-@import '@carbon/themes/scss/themes';
-// Use the gray 100 theme
-$carbon--theme: $carbon--theme--g100;
-@include carbon--theme($carbon--theme--g100);

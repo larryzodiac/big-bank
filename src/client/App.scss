@@ -1,7 +1,41 @@
 /* App.scss */
 
+@import '@carbon/themes/scss/themes';
+// Use the gray 100 theme
+$carbon--theme: $carbon--theme--g100;
+@include carbon--theme();
+
+@import 'carbon-components/scss/globals/scss/styles.scss';
+
 // @import './components/nav/nav.scss';
 
-p {
-    margin-top: 10rem !important;
+$feature-flags: (
+  ui-shell: true,
+  grid-columns-16: true,
+);
+
+br {
+  line-height: 8px;
+}
+
+hr {
+  margin-top: $spacing-09;
+  margin-bottom: $spacing-05;
+}
+
+.bx--content {
+  background-color: #161616;
+}
+
+.entry-page__title {
+  padding-top: $spacing-09;
+}
+
+.entry-page__form {
+  max-width: 320px;
+  padding-top: $spacing-04;
+}
+
+.entry-page__input {
+  padding-bottom: $spacing-05;
 }
