@@ -19,7 +19,6 @@ import {
 
 function LoginPage(props) {
     const [login, setLogin] = useState(true);
-    const [redirect, setRedirect] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState(undefined);
@@ -27,8 +26,11 @@ function LoginPage(props) {
     const [registerSuccess, setRegisterSuccess] = useState(false);
 
     useEffect(() => {
-
-    });
+        if(props.loginStatus) {
+            console.log('Someone is logged in');
+            props.history.push('/dashboard');
+        }
+    }, [props.loginStatus]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -56,10 +58,11 @@ function LoginPage(props) {
             // Axios post login
             axios.post('/api/login', {username, password})
             .then(function (response) {
-                console.log(response)
+                console.log('Logged in')
                 // redirect to '/'
-                props.setId(response);
-                setRedirect(true);
+                props.setId(response.data);
+                props.setLoginStatus(true);
+                props.history.push('/dashboard');
             })
             .catch(function(error) {
                 console.log('Failed to login');
@@ -80,7 +83,6 @@ function LoginPage(props) {
 
     return (
         <Row>
-            {redirect && <Redirect to='/'/>}
             <Column sm={4} md={4} lg={6}>
                 <Form className="entry-page__form" onSubmit={handleSubmit}>
                     <div className="entry-page__title">

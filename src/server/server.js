@@ -70,7 +70,8 @@ server.post('/api/login', (req, res) => {
       user.comparePassword(password, function(err, isMatch){
         if(isMatch && isMatch == true) {
           req.session.userId = user._id;
-          return res.status(200).send(`Logged in user: ${username} with Id: ${req.session.userId}`);
+          // return res.status(200).send(`Logged in user: ${username} with Id: ${req.session.userId}`);
+          return res.status(200).send(req.session.userId);
         } else {
           return res.status(401).send('Password invalid');
         }

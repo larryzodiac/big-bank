@@ -1,5 +1,13 @@
 import './App.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+/*
+  As of Babel 7.4.0, this package has been deprecated in favor of directly
+  including core-js/stable (to polyfill ECMAScript features) and
+  regenerator-runtime/runtime (needed to use transpiled generator functions):
+*/
+import 'core-js/stable';
+import "regenerator-runtime/runtime.js";
+// Axios
 import axios from 'axios';
 // Carbon
 import { Button, Content, Grid } from 'carbon-components-react';
@@ -15,43 +23,90 @@ import Nav from './components/nav/Nav';
 
 function App() {
   // Declare multiple state variables!
-  const [id, setId] = useState(null);
+  const [id, setId] = useState('');
+  const [loginStatus, setLoginStatus] = useState(false);
 
-  const getSession = () => {
-    axios.get('/api/dashboard')
+  // const isLoggedIn = useCallback(async () => {
+  //   await axios.get('/api/dashboard')
+  //   .then(function (response) {
+  //     // handle success
+  //     console.log(response);
+  //     setId(response);
+  //   })
+  //   .catch(function(error) {
+  //     console.log('/api/dashboard - error');
+  //   });
+  // }, [])
+
+  const isLoggedIn = async () => {
+    let status;
+    await axios.get('/api/dashboard')
     .then(function (response) {
       // handle success
+      console.log('/api/dashboard - success');
       setId(response.data);
-      console.log(id);
+      setLoginStatus(true);
     })
     .catch(function(error) {
-      console.log(error)
+      console.log('/api/dashboard - error');
+      setLoginStatus(false);
     });
   }
 
-  // Similar to componentDidMount and componentDidUpdate:
+  const logout = (props) => {
+    /*
+      react-router Route Component Props History 🔌
+      Allows us to redirect by accessing the history prop!
+      https://medium.com/@anneeb/redirecting-in-react-4de5e517354a
+    */
+    axios.post('/api/logout')
+      .then((response) => {
+        if (response.status === 200) {
+          setLoginStatus(false);
+          setId('');
+        }
+      });
+  }
+
+   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    getSession();
+    isLoggedIn();
     // if [], run once when App() loads and don't run again
-  });
+  })
 
   return (
     <React.Fragment>
-      <Nav />
+      <Nav loginStatus={loginStatus} logout={logout} />
       <Content>
         <Grid>
           <Switch>
-            <Route exact path="/" render={() => (
+            {/* <Route exact path="/" render={() => (
                 id ? (
-                  <Redirect to="/dashboard" />           
+                  <Redirect to="/dashboard" />
                 ) : (
                   <Redirect to="/entry" />
                 )
               )}
+            /> */}
+            <Route
+              exact path="/"
+              render={props => (
+                <EntryPage {...props}
+                  loginStatus={loginStatus}
+                  setLoginStatus={setLoginStatus}
+                  setId={setId}
+                />
+              )}
             />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route
+              path="/dashboard"
+              render={props => (
+                <Dashboard {...props}
+                  loginStatus={loginStatus}
+                />
+              )}
+            />
             {/* <Route path="/entry" component={EntryPage} /> */}
-            <Route path="/entry" render={props => <EntryPage {...props} setId={setId} />} />
           </Switch>
         </Grid>
       </Content>
