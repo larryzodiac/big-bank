@@ -133,7 +133,7 @@ function LoginPage(props) {
                         </Button>
                     </div>
                     <hr/>
-                    <p> Made by <Link href="https://evanmachale.dev/" style={{fontSize:'1rem'}} inline onClick={() => setLogin(!login)}>Evan</Link>.</p>
+                    <p> Made by <Link href="https://evanmachale.dev/" style={{fontSize:'1rem'}} inline>Evan</Link>.</p>
                 </Form>
             </Column>
             <Column sm={0} md={4} lg={12} />

@@ -3,29 +3,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // Carbon
 import {
-    ContentSwitcher,
-    Switch,
     Row,
     Column,
     Search,
-    Tile,
-    Table,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TableHeader,
-    TableBody,
-    TableCell,
-    DataTableSkeleton,
+    Form
 } from 'carbon-components-react';
-import { GlobalAnalytics } from '@carbon/pictograms-react';
+// My Components
+import DataTable from '../components/DataTable';
 
 function Dashboard(props) {
     const [user, setUser] = useState({});
-    const [name, setName] = useState(undefined);
-    const [symbols, setSymbols] = useState([]);
     const [loadingStatus, setLoadingStatus] = useState(true);
-    const headers = ['Symbol', 'High', 'Low', 'Close', 'Volume', 'Change', 'Action'];
+    const [searchQuery, setSearchQuery] = useState('');
+    const headers = ['Symbol', 'High', 'Low', 'Close', 'Volume', 'Change', ''];
 
     useEffect(() => {
         if(!props.loginStatus) {
@@ -33,47 +23,12 @@ function Dashboard(props) {
         }
     }, [props.loginStatus]);
 
-    const getWatchedSymbols = async (data) => {
-        let symbols = [];
-        await data.symbols.forEach( async (symbol) => {
-            await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${process.env.REACT_APP_API_KEY}`)
-            .then((response) => {
-                // const d = response.data['Global Quote'];
-                // console.log(d['01. symbol']); // IBM
-                symbols.push(response.data['Global Quote']);
-            })
-            .catch((error) => {
-                console.log('alpha - error');
-                console.log(error);
-            });
-        });
-        return symbols;
-    }
-
-    const getUse = () => {
-        axios.get('/api/getuser')
-        .then((response) => {
-            setName(response.data.username);
-            // setSymbols
-        })
-        .catch((error) => {
-            console.log('/api/getuser - error');
-            console.log(error);
-        })
-        .then(() => {
-            console.log(symbols);
-            setLoadingStatus(false);
-        })
-    }
-
     useEffect(() => {
         if(props.loginStatus) {
             const getUser = async () => {
                 await axios.get('/api/getuser')
                 .then((response) => {
-                    console.log(response.data);
                     setUser(response.data);
-                    // setSymbols
                     setLoadingStatus(false);
                 })
                 .catch((error) => {
@@ -85,53 +40,11 @@ function Dashboard(props) {
         }
     }, []);
 
-    const renderDataTable = () => {
-        if(loadingStatus) {
-            return <DataTableSkeleton className="top-layout-04" />
-        } else {
-            if (!Array.isArray(user.symbols) || !user.symbols.length) {
-                // array does not exist, is not an array, or is empty
-                // ⇒ do not attempt to process array
-                return (
-                    <Tile className="top-layout-04">
-                        <h3>No Symbols found</h3>
-                        <p>Start by searching for symbols above</p>
-                        <GlobalAnalytics aria-label="Pictogram" className="pictogram" />
-                    </Tile>
-                );
-            } else {
-                return (
-                    <TableContainer className="top-layout-04" title="Watchlist" description="Symbols you follow">
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    {headers.map((header) => (
-                                        <TableHeader key={header}>{header}</TableHeader>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            {/* <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.id}>
-                                        {Object.keys(row).filter((key) => key !== 'id')
-                                        .map((key) => {
-                                            return <TableCell key={key}>{row[key]}</TableCell>;
-                                        })}
-                                    </TableRow>
-                                ))}
-                                <TableRow>
-                                    <TableCell>{symbols[0]["01. symbol"]}</TableCell>
-                                </TableRow>
-                            </TableBody> */}
-                        </Table>
-                    </TableContainer>
-                );
-            }
-        }
-    }
-
-    const handleSearch = () => {
+    const handleSubmit = (event) => {
         event.preventDefault();
+        if(searchQuery) {
+            props.history.push(`/search/${searchQuery}`);
+        }
     }
     
     return (
@@ -143,12 +56,16 @@ function Dashboard(props) {
             </Row>
             <Row>
                 <Column sm={4} md={8} lg={16}>
-                    <Search
-                        className="top-layout-02"
-                        labelText=""
-                        id="search-1"
-                        placeHolderText="Search symbols, e.g IBM"
-                    />
+                    <Form onSubmit={handleSubmit}>
+                        <Search
+                            className="top-layout-02 bottom-layout-04"
+                            labelText=""
+                            id="search-1"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            placeHolderText="Search symbols, e.g IBM"
+                        />
+                    </Form>
                 </Column>
             </Row>
             <Row>
@@ -172,7 +89,7 @@ function Dashboard(props) {
                     <Row>
                         <Column>
                             <React.Fragment>
-                                {renderDataTable()}
+                                <DataTable loadingStatus={loadingStatus} headers={headers} symbols={user.symbols} />
                             </React.Fragment>
                         </Column>
                     </Row>

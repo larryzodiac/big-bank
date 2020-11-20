@@ -107,7 +107,14 @@ function App() {
                 />
               )}
             />
-            <Route path="/search/:id" render={props => <SearchPage {...props} />} />
+            <Route
+              path="/search/:query"
+              render={props => (
+                <SearchPage {...props} 
+                loginStatus={loginStatus}
+                />
+              )}
+            />
             {/* <Route path="/entry" component={EntryPage} /> */}
           </Switch>
         </Grid>

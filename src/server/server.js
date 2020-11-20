@@ -100,6 +100,23 @@ server.get('/api/getuser', (req, res) => {
   });
 });
 
+server.post('/api/addSymbol', (req, res) => {
+  const {userId} = req.session;
+  const {response} = req.body;
+  // Find user by id, then push response.data obj to array
+  // console.log(response.data['Global Quote']);
+  UserModel.update({ _id: userId }, { $push: { symbols: response.data } }, function (error, user) {
+    if(error) {
+      console.log(error);
+      return res.status(500).send('Find user failed!');
+    }
+    if(!user) {
+      return res.status(404).send('User does not exist');
+    }
+    return res.status(200).send('Add to symbols successful!');;
+  });
+});
+
 mongoose.connect(
   uri,
   options = {
