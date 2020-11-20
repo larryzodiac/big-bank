@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
-// Axios
-import axios from 'axios';
+/*
+  Dashboard.js
+  ============
+*/
+import React, { useState, useEffect, useContext } from 'react';
+// Context
+import { UserContext } from '../App';
 // Carbon
 import {
     Row,
@@ -12,39 +16,20 @@ import {
 import DataTable from '../components/DataTable';
 
 function Dashboard(props) {
-    const [user, setUser] = useState({});
-    const [loadingStatus, setLoadingStatus] = useState(true);
+    const { user, getUser, loginStatus } = useContext(UserContext);
+    const [loadingStatus, setLoadingStatus] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const headers = ['Symbol', 'High', 'Low', 'Close', 'Volume', 'Change', ''];
 
     useEffect(() => {
-        if(!props.loginStatus) {
+        if(!loginStatus) {
             props.history.push('/');
         }
-    }, [props.loginStatus]);
-
-    useEffect(() => {
-        if(props.loginStatus) {
-            const getUser = async () => {
-                await axios.get('/api/getuser')
-                .then((response) => {
-                    setUser(response.data);
-                    setLoadingStatus(false);
-                })
-                .catch((error) => {
-                    console.log('/api/getuser - error');
-                    console.log(error);
-                })
-            };
-            getUser();
-        }
-    }, []);
+    }, [loginStatus]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(searchQuery) {
-            props.history.push(`/search/${searchQuery}`);
-        }
+        if(searchQuery) props.history.push(`/search/${searchQuery}`);
     }
     
     return (
@@ -89,7 +74,7 @@ function Dashboard(props) {
                     <Row>
                         <Column>
                             <React.Fragment>
-                                <DataTable loadingStatus={loadingStatus} headers={headers} symbols={user.symbols} />
+                                <DataTable loadingStatus={loadingStatus} headers={headers} symbols={user.symbols}/>
                             </React.Fragment>
                         </Column>
                     </Row>

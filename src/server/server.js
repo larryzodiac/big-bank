@@ -33,11 +33,23 @@ server.use(session({
   cookie: {}
 }));
 
-server.get('/api/dashboard', (req, res) => {
+server.get('/api/session', (req, res) => {
   if(!req.session.userId) {
     return res.status(401).send('No user logged in!');
   }
-  return res.status(200).send(req.session.userId);
+  const {userId} = req.session;
+  // Mongoose ObjectId conversion not working, using Mongodb instead
+  // const id = mongoose.Types.ObjectId(userId);
+  UserModel.findById(ObjectId(userId), function (error, user) {
+    if(error) {
+      console.log(error);
+      return res.status(500).send('Find user failed!');
+    }
+    if(!user) {
+      return res.status(404).send('User does not exist');
+    }
+    return res.status(200).send(user);
+  });
 });
 
 server.post('/api/register', (req, res) => {
@@ -69,8 +81,7 @@ server.post('/api/login', (req, res) => {
       user.comparePassword(password, function(err, isMatch){
         if(isMatch && isMatch == true) {
           req.session.userId = user._id;
-          // return res.status(200).send(`Logged in user: ${username} with Id: ${req.session.userId}`);
-          return res.status(200).send(req.session.userId);
+          return res.status(200).send(`Logged in user: ${username} with Id: ${req.session.userId}`);
         } else {
           return res.status(401).send('Password invalid');
         }
@@ -105,7 +116,7 @@ server.post('/api/addSymbol', (req, res) => {
   const {response} = req.body;
   // Find user by id, then push response.data obj to array
   // console.log(response.data['Global Quote']);
-  UserModel.update({ _id: userId }, { $push: { symbols: response.data } }, function (error, user) {
+  UserModel.update({ _id: userId }, { $push: { symbols: response.data['Global Quote'] } }, function (error, user) {
     if(error) {
       console.log(error);
       return res.status(500).send('Find user failed!');

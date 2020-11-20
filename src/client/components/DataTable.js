@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+/*
+  DataTable.js
+  ============
+*/
+import React, { useContext } from 'react';
+// Context
+import { UserContext } from '../App';
 // Axios
 import axios from 'axios';
 // Carbon
@@ -15,24 +21,22 @@ import {
     TableCell,
     DataTableSkeleton
 } from 'carbon-components-react';
+// Icons
+import { Add16 } from '@carbon/icons-react';
+// Pictograms
 import { GlobalAnalytics } from '@carbon/pictograms-react';
-import {
-    Add16
-} from '@carbon/icons-react';
 
 function DataTable(props) {
-    const [quoteEndpoint, setQuoteEndpoint] = useState({});
+    const { getUser } = useContext(UserContext);
 
-    const handleWatch = async (s) => {
-        console.log(s)
-        await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${s}&apikey=${process.env.REACT_APP_API_KEY}`)
+    const handleWatch = async (symbol) => {
+        await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${process.env.REACT_APP_API_KEY}`)
         .then((response) => {
-            setQuoteEndpoint(response.data);
-            console.log(response.data);
             axios.post('/api/addSymbol', {response})
             .then((response) => {
                 if (response.status === 200) {
                     // Change button to unwatch
+                    getUser();
                 }
             });
         })

@@ -1,5 +1,10 @@
+/*
+  App.js
+  Notes
+  ================
+*/
 import './App.scss';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 /*
   As of Babel 7.4.0, this package has been deprecated in favor of directly
   including core-js/stable (to polyfill ECMAScript features) and
@@ -10,9 +15,9 @@ import "regenerator-runtime/runtime.js";
 // Axios
 import axios from 'axios';
 // Carbon
-import { Button, Content, Grid } from 'carbon-components-react';
+import { Content, Grid } from 'carbon-components-react';
 // React Router
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 // My Content Pages
 import EntryPage from './content/EntryPage';
 import Dashboard from './content/Dashboard';
@@ -20,39 +25,45 @@ import SearchPage from './content/SearchPage';
 // My Components
 import Nav from './components/nav/Nav';
 
-// 5fb00d2da408857a2396053b
+/*
+  Context
+*/
+
+export const UserContext = React.createContext('hello');
+
+/*
+  App functions as the hub for all component traffic 🚂
+*/
 
 function App() {
   // Declare multiple state variables!
-  const [id, setId] = useState('');
+  const [user, setUser] = useState('');
   const [loginStatus, setLoginStatus] = useState(false);
 
-  // const isLoggedIn = useCallback(async () => {
-  //   await axios.get('/api/dashboard')
-  //   .then(function (response) {
-  //     // handle success
-  //     console.log(response);
-  //     setId(response);
-  //   })
-  //   .catch(function(error) {
-  //     console.log('/api/dashboard - error');
-  //   });
-  // }, [])
-
-  const isLoggedIn = async () => {
-    let status;
-    await axios.get('/api/dashboard')
-    .then(function (response) {
+  /*
+    Check whether a user is logged in
+    Return that user to state + context
+  */
+  const getUser = async () => {
+    await axios.get('/api/session')
+    .then((response) => {
       // handle success
-      console.log('/api/dashboard - success');
-      setId(response.data);
+      console.log('/api/session - success');
+      console.log(response.data)
+      setUser(response.data);
       setLoginStatus(true);
     })
-    .catch(function(error) {
-      console.log('/api/dashboard - error');
+    .catch((error) => {
+      console.log('/api/session - error');
       setLoginStatus(false);
     });
   }
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    getUser();
+    // if [], run once when App() loads and don't run again
+  })
 
   const logout = (props) => {
     /*
@@ -64,38 +75,23 @@ function App() {
       .then((response) => {
         if (response.status === 200) {
           setLoginStatus(false);
-          setId('');
+          setUser({});
         }
       });
   }
 
-   // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    isLoggedIn();
-    // if [], run once when App() loads and don't run again
-  })
-
   return (
-    <React.Fragment>
+    <UserContext.Provider value={{ user, getUser, loginStatus }}>
       <Nav loginStatus={loginStatus} logout={logout} />
       <Content>
         <Grid>
           <Switch>
-            {/* <Route exact path="/" render={() => (
-                id ? (
-                  <Redirect to="/dashboard" />
-                ) : (
-                  <Redirect to="/entry" />
-                )
-              )}
-            /> */}
             <Route
               exact path="/"
               render={props => (
                 <EntryPage {...props}
                   loginStatus={loginStatus}
                   setLoginStatus={setLoginStatus}
-                  setId={setId}
                 />
               )}
             />
@@ -119,7 +115,7 @@ function App() {
           </Switch>
         </Grid>
       </Content>
-    </React.Fragment>
+    </UserContext.Provider>
   );
 }
 

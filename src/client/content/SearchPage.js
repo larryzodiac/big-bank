@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
+/*
+  SearchPage.js
+  =============
+*/
+import React, { useState, useContext, useEffect } from 'react';
+// Context
+import { UserContext } from '../App';
+// Axios
 import axios from 'axios';
+// Carbon
 import {
     Row,
     Column,
@@ -10,16 +18,17 @@ import {
 import DataTable from '../components/DataTable';
 
 function SearchPage(props) {
+    const { loginStatus } = useContext(UserContext);
     const [symbols, setSymbols] = useState([]);
     const [loadingStatus, setLoadingStatus] = useState(true);
     const [searchQuery, setSearchQuery] = useState(props.match.params.query);
     const headers = ['Symbol', 'Name', 'Type', 'Region', 'Currency', ''];
 
     useEffect(() => {
-        if(!props.loginStatus) {
+        if(!loginStatus) {
             props.history.push('/');
         }
-    }, [props.loginStatus]);
+    }, [loginStatus]);
 
     const getSearch = async () => {
         await axios.get(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${searchQuery}&apikey=${process.env.REACT_APP_API_KEY}`)
@@ -27,14 +36,11 @@ function SearchPage(props) {
             setSymbols(response.data.bestMatches);
             setLoadingStatus(false);
         })
-        .catch((error) => {
-            console.log('/api/getuser - error');
-            console.log(error);
-        })
+        .catch((error) => console.log(error));
     };
 
     useEffect(() => {
-        if(props.loginStatus) {
+        if(loginStatus) {
             getSearch();
         }
     },[]);

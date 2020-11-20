@@ -58,7 +58,6 @@ function LoginPage(props) {
             .then(function (response) {
                 console.log('Logged in')
                 // redirect to '/'
-                props.setId(response.data);
                 props.setLoginStatus(true);
                 props.history.push('/dashboard');
             })
