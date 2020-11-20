@@ -72,6 +72,8 @@ module.exports = {
             filename: '[name].css',
             chunkFilename: '[id].css',
         }),
+        // REACT_APP envs not working, think it's webpack
+        new webpack.EnvironmentPlugin({REACT_APP_API_KEY: 'X5M4E5DE8L7WJON4'}),
     ],
     optimization: {
         splitChunks: {

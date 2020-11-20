@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// React Router
-import { Redirect } from 'react-router-dom';
 // Carbon
 import {
     Button,

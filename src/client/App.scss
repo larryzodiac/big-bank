@@ -50,7 +50,7 @@ hr {
   background-color: #161616;
 }
 
-.entry-page__title {
+.entry-page__title, .dashboard__title {
   padding-top: $spacing-09;
 }
 
@@ -61,4 +61,52 @@ hr {
 
 .entry-page__input {
   padding-bottom: $spacing-05;
+}
+
+//
+
+$spaces: (
+  spacing-01: $spacing-01,
+  spacing-02: $spacing-02,
+  spacing-03: $spacing-03,
+  spacing-04: $spacing-04,
+  spacing-05: $spacing-05,
+  spacing-06: $spacing-06,
+  spacing-07: $spacing-07,
+  spacing-08: $spacing-08,
+  spacing-09: $spacing-09
+);
+
+$layouts: (
+  layout-01: $layout-01,
+  layout-02: $layout-02,
+  layout-03: $layout-03,
+  layout-04: $layout-04,
+  layout-05: $layout-05,
+  layout-06: $layout-06,
+  layout-07: $layout-07
+);
+
+@each $name, $space in $spaces {
+  .top-#{$name} {
+    padding-top: $space;
+  }
+}
+
+@each $name, $space in $spaces {
+  .bottom-#{$name} {
+    padding-bottom: $space;
+  }
+}
+
+@each $name, $layout in $layouts {
+  .top-#{$name} {
+    margin-top: $layout;
+  }
+}
+
+@each $name, $layout in $layouts {
+  .bottom-#{$name} {
+    margin-bottom: $layout;
+  }
 }

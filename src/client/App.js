@@ -16,6 +16,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 // My Content Pages
 import EntryPage from './content/EntryPage';
 import Dashboard from './content/Dashboard';
+import SearchPage from './content/SearchPage';
 // My Components
 import Nav from './components/nav/Nav';
 
@@ -106,6 +107,7 @@ function App() {
                 />
               )}
             />
+            <Route path="/search/:id" render={props => <SearchPage {...props} />} />
             {/* <Route path="/entry" component={EntryPage} /> */}
           </Switch>
         </Grid>

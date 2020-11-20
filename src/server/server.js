@@ -1,6 +1,7 @@
 /* Server.js */
 
 // MongoDB
+const { ObjectId } = require('mongodb');
 // const MongoClient = require('mongodb').MongoClient;
 //Express
 const express = require('express');
@@ -33,8 +34,6 @@ server.use(session({
 }));
 
 server.get('/api/dashboard', (req, res) => {
-  console.log('Session here:');
-  console.log(req.session.userId);
   if(!req.session.userId) {
     return res.status(401).send('No user logged in!');
   }
@@ -82,7 +81,23 @@ server.post('/api/login', (req, res) => {
 
 server.post('/api/logout', (req, res) => {
   req.session.destroy();
-  return res.status(200).send('Successful logout!')
+  return res.status(200).send('Successful logout!');
+});
+
+server.get('/api/getuser', (req, res) => {
+  const {userId} = req.session;
+  // Mongoose ObjectId conversion not working, using Mongodb instead
+  // const id = mongoose.Types.ObjectId(userId);
+  UserModel.findById(ObjectId(userId), function (error, user) {
+    if(error) {
+      console.log(error);
+      return res.status(500).send('Find user failed!');
+    }
+    if(!user) {
+      return res.status(404).send('User does not exist');
+    }
+    return res.status(200).send(user);
+  });
 });
 
 mongoose.connect(

@@ -12,7 +12,7 @@ const userSchema = new Schema({
     password: {
         type: String
     },
-    watchlist: []
+    symbols: []
 });
 
 userSchema.pre('save', function(next) {
