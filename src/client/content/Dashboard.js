@@ -19,7 +19,7 @@ function Dashboard(props) {
     const { user, getUser, loginStatus } = useContext(UserContext);
     const [loadingStatus, setLoadingStatus] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const headers = ['Symbol', 'High', 'Low', 'Close', 'Volume', 'Change', ''];
+    const headers = ['Symbol', 'High', 'Low', 'Volume', 'Close', 'Change', '%', ''];
 
     useEffect(() => {
         if(!loginStatus) {

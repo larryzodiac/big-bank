@@ -113,10 +113,9 @@ server.get('/api/getuser', (req, res) => {
 
 server.post('/api/addSymbol', (req, res) => {
   const {userId} = req.session;
-  const {response} = req.body;
+  const {symbol} = req.body;
   // Find user by id, then push response.data obj to array
-  // console.log(response.data['Global Quote']);
-  UserModel.update({ _id: userId }, { $push: { symbols: response.data['Global Quote'] } }, function (error, user) {
+  UserModel.update({ _id: userId }, { $push: { symbols: symbol } }, function (error, user) {
     if(error) {
       console.log(error);
       return res.status(500).send('Find user failed!');
@@ -125,6 +124,30 @@ server.post('/api/addSymbol', (req, res) => {
       return res.status(404).send('User does not exist');
     }
     return res.status(200).send('Add to symbols successful!');;
+  });
+});
+
+server.post('/api/removeSymbol', (req, res) => {
+  const {userId} = req.session;
+  const {symbol} = req.body;
+  console.log(userId);
+  console.log(symbol);
+  // Find user by id, then push response.data obj to array
+  // Does work { $pull: { symbols: { '01symbol' : symbol } } },
+  // Doesn't work { $pull: { symbols: { '01. symbol' : symbol } } },
+  UserModel.update(
+    { _id: userId },
+    { $pull: { symbols: { 'symbol' : symbol } } },
+    { multi: true },
+    (error, user) => {
+    if(error) {
+      console.log(error);
+      return res.status(500).send('Find user failed!');
+    }
+    if(!user) {
+      return res.status(404).send('User does not exist');
+    }
+    return res.status(200).send('symbol removed successfully!');;
   });
 });
 

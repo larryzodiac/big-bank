@@ -5,7 +5,6 @@ import {
     Button,
     Form,
     TextInput,
-    Tile,
     Row,
     Column,
     InlineNotification,
@@ -25,7 +24,6 @@ function LoginPage(props) {
 
     useEffect(() => {
         if(props.loginStatus) {
-            console.log('Someone is logged in');
             props.history.push('/dashboard');
         }
     }, [props.loginStatus]);
@@ -53,26 +51,24 @@ function LoginPage(props) {
         }
         // Axios
         if(login && valid) {
-            // Axios post login
             axios.post('/api/login', {username, password})
-            .then(function (response) {
-                console.log('Logged in')
+            .then((response) => {
                 // redirect to '/'
                 props.setLoginStatus(true);
                 props.history.push('/dashboard');
             })
-            .catch(function(error) {
-                console.log('Failed to login');
+            .catch((error) => {
+                console.log(error);
             });
         } else if(!login && valid) {
             axios.post('/api/register', {username, password})
-            .then(function (response) {
+            .then((response) => {
                 setLogin(true);
                 setRegisterSuccess(true);
                 // Switch to login + notify success!
             })
-            .catch(function(error) {
-                console.log('Failed to register');
+            .catch((error) => {
+                console.log(error);
                 // Show errors
             });
         }

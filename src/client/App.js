@@ -48,13 +48,10 @@ function App() {
     await axios.get('/api/session')
     .then((response) => {
       // handle success
-      console.log('/api/session - success');
-      console.log(response.data)
       setUser(response.data);
       setLoginStatus(true);
     })
     .catch((error) => {
-      console.log('/api/session - error');
       setLoginStatus(false);
     });
   }
@@ -63,7 +60,7 @@ function App() {
   useEffect(() => {
     getUser();
     // if [], run once when App() loads and don't run again
-  })
+  }, [loginStatus])
 
   const logout = (props) => {
     /*
