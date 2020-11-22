@@ -32,7 +32,7 @@ To begin, the project required a setup. This included standard [MERN](https://ww
 2. Connect to Mongodb.
 3. Setup Express API & Axios to connect the client to the server.
 
-Once completed, the next step in the project was authentication for users wishing to register/login/logout. This was achieved by first setting up API routes and testing them with [Postman](https://www.postman.com/), followed by building basic forms & handling route redirections in React using Axios & React Router. Finally, to achieve a persistent session for user who are already logged in, [Express Sessions](https://www.npmjs.com/package/express-session) was used. 
+Once completed, the next step in the project was authentication for users wishing to register/login/logout. This was achieved by first setting up API routes and testing them with [Postman](https://www.postman.com/), followed by building basic forms & handling route redirections in React using Axios & React Router. Finally, to achieve a persistent session for users who are already logged in, [Express Sessions](https://www.npmjs.com/package/express-session) was used. 
 
 4. Setup UI component libraries.
 5. Setup site map & routes.
