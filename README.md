@@ -26,7 +26,7 @@ On approaching this challenge I wanted to do the following :
 
 ### Steps
 
-The first project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependecies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
+To begin, the project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependecies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
 
 1. Setup development environment with Create-react-app & Webpack.
 2. Connect to Mongodb.
