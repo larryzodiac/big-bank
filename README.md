@@ -74,3 +74,7 @@ The app allows the user to do the following:
 - [x] search for stocks
 - [x] follow stocks they are interested in
 - [x] unfollow stocks they are no longer interested in
+
+## Note
+
+The Mongodb cluster used in this project has been whitelisted for _all_ IP addresses.
