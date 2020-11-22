@@ -6,6 +6,7 @@ $carbon--theme: $carbon--theme--g100;
 @include carbon--theme();
 
 @import 'carbon-components/scss/globals/scss/styles.scss';
+@import "@carbon/charts/styles-g100.css";
 
 // @import './components/nav/nav.scss';
 
@@ -13,6 +14,15 @@ $feature-flags: (
   ui-shell: true,
   grid-columns-16: true,
 );
+
+.loading {
+  width: inherit;
+  margin: 38vh auto;
+}
+
+.bx--loading {
+  margin: auto;
+}
 
 .bx--header-panel {
   height: auto;
@@ -109,4 +119,56 @@ $layouts: (
   .bottom-#{$name} {
     margin-bottom: $layout;
   }
+}
+
+svg.pictogram {
+  margin-bottom: -1rem;
+  margin-left: -1rem;
+  width: 112px;
+  height: 112px;
+  stroke-width: 2.52px;
+  padding: 0px;
+}
+
+.unwatch-button {
+  color: #da1e28;
+}
+
+.unwatch-button:hover {
+  color: #fa4d56;
+}
+
+.bx--resource-card__subtitle {
+  font-size: var(--cds-heading-01-font-size,.875rem);
+  font-weight: var(--cds-heading-01-font-weight,600);
+  line-height: var(--cds-heading-01-line-height,1.29);
+  letter-spacing: var(--cds-heading-01-letter-spacing,.16px);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.bx--resource-card__title {
+  font-size: var(--cds-productive-heading-03-font-size,1.25rem);
+  font-weight: var(--cds-productive-heading-03-font-weight,400);
+  line-height: var(--cds-productive-heading-03-line-height,1.4);
+  letter-spacing: var(--cds-productive-heading-03-letter-spacing,0);
+  text-decoration: none;
+}
+
+.bx--resource-card__icon--img {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bx--resource-card__icon--action {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 20px;
+  height: 20px;
 }

@@ -19,7 +19,9 @@ import {
     TableBody,
     Form,
     TableCell,
-    DataTableSkeleton
+    DataTableSkeleton,
+    Row,
+    Column
 } from 'carbon-components-react';
 // Icons
 import { Add16, Subtract16 } from '@carbon/icons-react';
@@ -47,35 +49,39 @@ function DataTable(props) {
                 Couldn't edit property names so had to create a new object with other names
             */
             const symbolObject = response.data['Global Quote']
-            const newSymbolObject = {}
-            const newProps = {
-                "01. symbol": "symbol",
-                "02. open": "open",
-                "03. high": "high",
-                "04. low": "low",
-                "05. price": "price",
-                "06. volume": "volume",
-                "07. latest trading day": "latestTradingDay",
-                "08. previous close": "previousClose",
-                "09. change": "change",
-                "10. change percent": "changePercent"
-            }
-            for (const property in symbolObject) {
-                const oldKey = property;
-                const newKey = `${newProps[property]}`;
-                Object.defineProperty(
-                    newSymbolObject,
-                    newKey,
-                    Object.getOwnPropertyDescriptor(symbolObject, oldKey)
-                );
-            }
-            axios.post('/api/addSymbol', {symbol: newSymbolObject})
-            .then((response) => {
-                if (response.status === 200) {
-                    // Change button to unwatch
-                    getUser();
+            if(!(Object.keys(symbolObject).length === 0 && symbolObject.constructor === Object)) {
+                const newSymbolObject = {}
+                const newProps = {
+                    "01. symbol": "symbol",
+                    "02. open": "open",
+                    "03. high": "high",
+                    "04. low": "low",
+                    "05. price": "price",
+                    "06. volume": "volume",
+                    "07. latest trading day": "latestTradingDay",
+                    "08. previous close": "previousClose",
+                    "09. change": "change",
+                    "10. change percent": "changePercent"
                 }
-            });
+                for (const property in symbolObject) {
+                    const oldKey = property;
+                    const newKey = `${newProps[property]}`;
+                    Object.defineProperty(
+                        newSymbolObject,
+                        newKey,
+                        Object.getOwnPropertyDescriptor(symbolObject, oldKey)
+                    );
+                }
+                axios.post('/api/addSymbol', {symbol: newSymbolObject})
+                .then((response) => {
+                    if (response.status === 200) {
+                        // Change button to unwatch
+                        getUser();
+                    }
+                });
+            } else {
+                console.log(`Selected symbol ${symbol} from alpha vantage api has returned NULL. This symbol cannot be watched.`)
+            }
         })
         .catch((error) => console.log(error));
     }
@@ -96,8 +102,9 @@ function DataTable(props) {
                 return (
                     <Button
                         renderIcon={Subtract16}
-                        kind='danger'
+                        kind='ghost'
                         onClick={() => handleUnwatch(checkSymbol)}
+                        className="unwatch-button"
                     >Unwatch</Button>
                 )
             }
@@ -105,7 +112,7 @@ function DataTable(props) {
         return (
             <Button
                 renderIcon={Add16}
-                kind='primary'
+                kind='ghost'
                 onClick={() => handleWatch(checkSymbol)}
             >Watch</Button>
         );
@@ -118,14 +125,20 @@ function DataTable(props) {
             // array does not exist, is not an array, or is empty
             // ⇒ do not attempt to process array
             return (
-                <Tile>
-                    <h3>Hello</h3>
-                    <GlobalAnalytics aria-label="Pictogram" className="pictogram" />
+                <Tile className="top-layout-01">
+                    <h5 className="bx--resource-card__subtitle">No symbols found</h5>
+                    <h4 className="bx--resource-card__title bottom-spacing-09">Get started by searching for stocks above</h4>
+                    <Row>
+                        <Column className="top-spacing-09">
+                            <GlobalAnalytics aria-label="Pictogram" className="pictogram" />
+                        </Column>
+                    </Row>
                 </Tile>
+                
             );
         } else {
             return (
-                <Table>
+                <Table className="top-layout-04">
                     <TableHead>
                         <TableRow>
                             {props.headers.map((header) => (

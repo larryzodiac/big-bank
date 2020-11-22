@@ -46,8 +46,10 @@ function Nav(props) {
             {props.loginStatus ? (
                 <React.Fragment>
                     <HeaderNavigation aria-label="IBM [Platform]">
-                        <HeaderMenuItem isCurrentPage href="#">Dashboard</HeaderMenuItem>
+                        <HeaderMenuItem isCurrentPage href="/dashboard">Dashboard</HeaderMenuItem>
                         <HeaderMenuItem href="#">Market</HeaderMenuItem>
+                        <HeaderMenuItem href="#">Forex</HeaderMenuItem>
+                        <HeaderMenuItem href="#">Crypto</HeaderMenuItem>
                     </HeaderNavigation>
                     <SideNav
                         aria-label="Side navigation"
@@ -56,8 +58,10 @@ function Nav(props) {
                     >
                         <SideNavItems>
                             <HeaderSideNavItems>
-                            <HeaderMenuItem href="#">Dashboard</HeaderMenuItem>
+                            <HeaderMenuItem href="/dashboard">Dashboard</HeaderMenuItem>
                             <HeaderMenuItem href="#">Market</HeaderMenuItem>
+                            <HeaderMenuItem href="#">Forex</HeaderMenuItem>
+                            <HeaderMenuItem href="#">Crypto</HeaderMenuItem>
                             </HeaderSideNavItems>
                         </SideNavItems>
                     </SideNav>

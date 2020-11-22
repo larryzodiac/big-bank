@@ -15,7 +15,7 @@ import "regenerator-runtime/runtime.js";
 // Axios
 import axios from 'axios';
 // Carbon
-import { Content, Grid } from 'carbon-components-react';
+import { Content, Grid, Loading } from 'carbon-components-react';
 // React Router
 import { Route, Switch } from 'react-router-dom';
 // My Content Pages
@@ -39,6 +39,7 @@ function App() {
   // Declare multiple state variables!
   const [user, setUser] = useState('');
   const [loginStatus, setLoginStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(true);
 
   /*
     Check whether a user is logged in
@@ -50,9 +51,11 @@ function App() {
       // handle success
       setUser(response.data);
       setLoginStatus(true);
+      setLoadingStatus(false);
     })
     .catch((error) => {
       setLoginStatus(false);
+      setLoadingStatus(false);
     });
   }
 
@@ -79,39 +82,50 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, getUser, loginStatus }}>
-      <Nav loginStatus={loginStatus} logout={logout} />
-      <Content>
-        <Grid>
-          <Switch>
-            <Route
-              exact path="/"
-              render={props => (
-                <EntryPage {...props}
-                  loginStatus={loginStatus}
-                  setLoginStatus={setLoginStatus}
+      {loadingStatus ? (
+        <div className="loading">
+          <Loading
+            description="Active loading indicator"
+            withOverlay={false}
+          />
+        </div>
+      ) : (
+        <React.Fragment>
+          <Nav loginStatus={loginStatus} logout={logout} />
+          <Content>
+            <Grid>
+              <Switch>
+                <Route
+                  exact path="/"
+                  render={props => (
+                    <EntryPage {...props}
+                      loginStatus={loginStatus}
+                      setLoginStatus={setLoginStatus}
+                    />
+                  )}
                 />
-              )}
-            />
-            <Route
-              path="/dashboard"
-              render={props => (
-                <Dashboard {...props}
-                  loginStatus={loginStatus}
+                <Route
+                  path="/dashboard"
+                  render={props => (
+                    <Dashboard {...props}
+                      loginStatus={loginStatus}
+                    />
+                  )}
                 />
-              )}
-            />
-            <Route
-              path="/search/:query"
-              render={props => (
-                <SearchPage {...props} 
-                loginStatus={loginStatus}
+                <Route
+                  path="/search/:query"
+                  render={props => (
+                    <SearchPage {...props} 
+                    loginStatus={loginStatus}
+                    />
+                  )}
                 />
-              )}
-            />
-            {/* <Route path="/entry" component={EntryPage} /> */}
-          </Switch>
-        </Grid>
-      </Content>
+                {/* <Route path="/entry" component={EntryPage} /> */}
+              </Switch>
+            </Grid>
+          </Content>
+        </React.Fragment>
+      )}
     </UserContext.Provider>
   );
 }
