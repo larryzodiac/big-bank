@@ -23,7 +23,7 @@ import EntryPage from './content/EntryPage';
 import Dashboard from './content/Dashboard';
 import SearchPage from './content/SearchPage';
 // My Components
-import Nav from './components/nav/Nav';
+import Nav from './components/Nav/Nav';
 
 /*
   Context
