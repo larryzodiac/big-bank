@@ -58,7 +58,8 @@ function LoginPage(props) {
                 props.history.push('/dashboard');
             })
             .catch((error) => {
-                console.log(error);
+                valid = false;
+                error.response.status == 404 ? setUsernameError(error.response.data) : setPasswordError(error.response.data) ;
             });
         } else if(!login && valid) {
             axios.post('/api/register', {username, password})
@@ -68,8 +69,8 @@ function LoginPage(props) {
                 // Switch to login + notify success!
             })
             .catch((error) => {
-                console.log(error);
-                // Show errors
+                valid = false;
+                setUsernameError(error.response.data);
             });
         }
     }

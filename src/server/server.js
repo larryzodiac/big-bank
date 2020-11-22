@@ -57,13 +57,25 @@ server.post('/api/register', (req, res) => {
   let newUser = new UserModel();
   newUser.username = username;
   newUser.password = password;
-  newUser.save(function (err) {
-    if(err) {
-      console.log(err);
-      return res.status(500).send(`Failed to register user: ${username}`);
+  UserModel.findOne(
+    { username: username },
+    function(error, user) {
+      if(error) {
+        console.log(error);
+        return res.status(500).send('Register failed!');
+      }
+      if(user) {
+        return res.status(401).send('User already exists');
+      }
+      newUser.save(function (err) {
+        if(err) {
+          console.log(err);
+          return res.status(500).send(`Failed to register user: ${username}`);
+        }
+        return res.status(200).send(`Registered user: ${username}`);
+      });
     }
-    return res.status(200).send(`Registered user: ${username}`);
-  });
+  )
 });
 
 server.post('/api/login', (req, res) => {
