@@ -41,7 +41,7 @@ With backend and setup mostly out of the way, a front end experience(MVP) could 
 
 See [basic mock-up](https://www.figma.com/file/zyedueHxLiuK2BFlSL2ZZ6/big-bank?node-id=0%3A1).
 
-The challeneg MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users recieved monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
+The challenge MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users recieved monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
 
 6. Manipulate Aplha Vantage API.
 7. Build boilerplate UI(MVP).
