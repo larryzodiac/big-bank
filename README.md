@@ -2,7 +2,7 @@
 
 > An application to help customers manage their portfolio of shares traded at New York Stock Exchange (NYSE).
 
-This is a week long project undertaken as part of an engineering challenge from a recruiter.
+This is a week long project undertaken as part of an engineering challenge from a company hiring for a full-stack role.
 
 ## Setup
 
