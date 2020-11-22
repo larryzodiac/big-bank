@@ -26,7 +26,7 @@ On approaching this challenge I wanted to do the following :
 
 ### Steps
 
-To begin, the project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependecies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
+To begin, the project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependencies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
 
 1. Setup development environment with Create-react-app & Webpack.
 2. Connect to Mongodb.
@@ -41,7 +41,7 @@ With backend and setup mostly out of the way, a front end experience(MVP) could 
 
 See [basic mock-up](https://www.figma.com/file/zyedueHxLiuK2BFlSL2ZZ6/big-bank?node-id=0%3A1).
 
-The challenge MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users recieved monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
+The challenge MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users received monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
 
 6. Manipulate Alpha Vantage API.
 7. Build boilerplate UI(MVP).
@@ -54,7 +54,7 @@ If more time were allowed, the project would implement the following :
 
 1. Interactive/live data chart.
 2. Twitter news feed(bot?) & explore idea of broker plugin.
-3. Indivdual symbol pages.
+3. Individual symbol pages.
 4. Hosted app for portfolio.
 5. Add more charts/correct colours to individual stock value changes.
 
