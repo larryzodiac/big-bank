@@ -43,7 +43,7 @@ See [basic mock-up](https://www.figma.com/file/zyedueHxLiuK2BFlSL2ZZ6/big-bank?n
 
 The challenge MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users recieved monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
 
-6. Manipulate Aplha Vantage API.
+6. Manipulate Alpha Vantage API.
 7. Build boilerplate UI(MVP).
 
 Initially the search functionality aimed to be _reactive_. One AJAX request would be made to the Alpha Vantage API to query _ALL_ stocks. This data would then be mapped over and filtered in React so when a user begins to type, results will appear instantly. However, the Alpha Vantage API offers a _Search Endpoint_ URL which returns the best-matching symbols and market information based on queried keywords. This was chosen due to convenience and the fact that the Alpha Vantage API has no URL to query all stocks.
