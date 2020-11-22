@@ -6,7 +6,7 @@ This is a week long project undertaken as part of an engineering challenge from 
 
 ## Setup
 
-how to run / build / ***test***.
+how to run / build.
 
 **`npm run dev`**
 
