@@ -172,7 +172,7 @@ mongoose.connect(
     useCreateIndex: true
   },
   error => {
-    if (error) {console.log(err)};
+    if (error) {console.log(error)};
     // Webpack dev-server and express server on the same port were disrupting one another
     server.listen(8000, () => console.log(`Listening on port 8000!`));
   }

@@ -2,6 +2,7 @@
   "name": "big-bank",
   "version": "0.1.0",
   "private": true,
+  "main": "src/server/server.js",
   "scripts": {
     "build": "webpack --mode production",
     "start": "npm run build && node src/server/server.js",
