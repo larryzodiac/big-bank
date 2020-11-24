@@ -2,11 +2,11 @@
 
 > An application to help customers manage their portfolio of shares traded at New York Stock Exchange (NYSE).
 
-This is a week long project undertaken as part of an engineering challenge from a recruiter.
+This is a week long project undertaken as part of an engineering challenge from a company hiring for a full-stack role.
 
 ## Setup
 
-how to run / build / ***test***.
+how to run / build.
 
 **`npm run dev`**
 
@@ -26,13 +26,13 @@ On approaching this challenge I wanted to do the following :
 
 ### Steps
 
-The first project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependecies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
+To begin, the project required a setup. This included standard [MERN](https://www.mongodb.com/mern-stack) stack dependencies using Node alongside a bundler([Webpack](https://webpack.js.org/)) & UI library([IBM Carbon](https://www.carbondesignsystem.com/)).
 
 1. Setup development environment with Create-react-app & Webpack.
 2. Connect to Mongodb.
 3. Setup Express API & Axios to connect the client to the server.
 
-Once completed, the next step in the project was authentication for users wishing to register/login/logout. This was achieved by first setting up API routes and testing them with [Postman](https://www.postman.com/), followed by building basic forms & handling route redirections in React using Axios & React Router. Finally, to achieve a persistent session for user who are already logged in, [Express Sessions](https://www.npmjs.com/package/express-session) was used. 
+Once completed, the next step in the project was authentication for users wishing to register/login/logout. This was achieved by first setting up API routes and testing them with [Postman](https://www.postman.com/), followed by building basic forms & handling route redirections in React using Axios & React Router. Finally, to achieve a persistent session for users who are already logged in, [Express Sessions](https://www.npmjs.com/package/express-session) was used. 
 
 4. Setup UI component libraries.
 5. Setup site map & routes.
@@ -41,9 +41,9 @@ With backend and setup mostly out of the way, a front end experience(MVP) could 
 
 See [basic mock-up](https://www.figma.com/file/zyedueHxLiuK2BFlSL2ZZ6/big-bank?node-id=0%3A1).
 
-The challeneg MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users recieved monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
+The challenge MVP includes an authentication landing page & dashboard page. Once logged in, users may browse their watchlist of stocks or search/watch stocks from the NYSE. Basic user research was also conducted; the inclusion of a broker plugin to the dashboard was motivated by the insight that both my users received monthly(also based on current events) reports from their brokers on the landscape of their portfolios and the market.
 
-6. Manipulate Aplha Vantage API.
+6. Manipulate Alpha Vantage API.
 7. Build boilerplate UI(MVP).
 
 Initially the search functionality aimed to be _reactive_. One AJAX request would be made to the Alpha Vantage API to query _ALL_ stocks. This data would then be mapped over and filtered in React so when a user begins to type, results will appear instantly. However, the Alpha Vantage API offers a _Search Endpoint_ URL which returns the best-matching symbols and market information based on queried keywords. This was chosen due to convenience and the fact that the Alpha Vantage API has no URL to query all stocks.
@@ -54,7 +54,7 @@ If more time were allowed, the project would implement the following :
 
 1. Interactive/live data chart.
 2. Twitter news feed(bot?) & explore idea of broker plugin.
-3. Indivdual symbol pages.
+3. Individual symbol pages.
 4. Hosted app for portfolio.
 5. Add more charts/correct colours to individual stock value changes.
 
@@ -74,3 +74,7 @@ The app allows the user to do the following:
 - [x] search for stocks
 - [x] follow stocks they are interested in
 - [x] unfollow stocks they are no longer interested in
+
+## Note
+
+The Mongodb cluster used in this project has been whitelisted for _all_ IP addresses.
